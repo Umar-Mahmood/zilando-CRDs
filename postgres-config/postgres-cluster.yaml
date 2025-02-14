@@ -6,7 +6,7 @@ spec:
   teamId: "acid"
   volume:
     size: 1Gi
-  numberOfInstances: 3
+  numberOfInstances: 4
   users:
     zalando:  # database owner
     - superuser
@@ -18,3 +18,5 @@ spec:
     bar: {}
   postgresql:
     version: "17"
+  parameters:
+    log_statement: "all" 
