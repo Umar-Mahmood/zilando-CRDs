@@ -19,4 +19,4 @@ spec:
   postgresql:
     version: "17"
   parameters:
-    log_statement: "all" 
+    log_statement: "all"
