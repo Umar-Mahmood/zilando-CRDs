@@ -18,5 +18,3 @@ spec:
     bar: {}
   postgresql:
     version: "17"
-  parameters:
-    log_statement: "all"
