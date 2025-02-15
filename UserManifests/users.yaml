@@ -9,7 +9,7 @@ data:
       - username: "app_user"
         password: "securepass1"
         database: "postgres"
-        roles: ["read", "write"]
+        roles: ["read", "standby"]
 
       - username: "analytics_user"
         password: "securepass2"
@@ -19,5 +19,5 @@ data:
       - username: "admin_user"
         password: "securepass3"
         database: "postgres"
-        roles: ["read", "write", "admin"]
+        roles: ["read", "admin"]
 
