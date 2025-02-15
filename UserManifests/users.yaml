@@ -1,0 +1,12 @@
+apiVersion: acid.zalan.do/v1
+kind: PostgreSQLUser
+metadata:
+  name: app-user
+  namespace: argocd-zilando
+spec:
+  username: "app_user"
+  password: "securepassword"
+  database: "acid-minimal-cluster"
+  roles:
+    - "read"
+    - "write"
