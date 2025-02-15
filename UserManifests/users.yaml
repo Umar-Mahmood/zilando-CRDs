@@ -1,12 +1,11 @@
-apiVersion: acid.zalan.do/v1
-kind: postgresqluser
-metadata:
-  name: new-app-user
-  namespace: argocd-zilando
-spec:
-  username: new_app_user
-  password: newpassword123
-  database: postgres
-  roles:
-    - read
+users:
+  - username: "app_user"
+    password: "securepass1"
+    database: "postgres"
+    roles: ["read", "write"]
+
+  - username: "admin_user"
+    password: "securepass2"
+    database: "postgres"
+    roles: ["superuser"]
 
