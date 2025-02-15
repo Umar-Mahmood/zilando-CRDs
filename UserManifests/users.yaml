@@ -11,11 +11,6 @@ data:
         database: "postgres"
         roles: ["read", "standby"]
 
-      - username: "analytics_user"
-        password: "securepass2"
-        database: "postgres"
-        roles: ["read"]
-
       - username: "admin_user"
         password: "securepass3"
         database: "postgres"
