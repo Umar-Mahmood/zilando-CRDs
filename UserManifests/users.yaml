@@ -1,11 +1,23 @@
-users:
-  - username: "app_user"
-    password: "securepass1"
-    database: "postgres"
-    roles: ["read", "write"]
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-users-config
+  namespace: argocd-zilando
+data:
+  users.yaml: |
+    users:
+      - username: "app_user"
+        password: "securepass1"
+        database: "postgres"
+        roles: ["read", "write"]
 
-  - username: "admin_user"
-    password: "securepass2"
-    database: "postgres"
-    roles: ["superuser"]
+      - username: "analytics_user"
+        password: "securepass2"
+        database: "analytics"
+        roles: ["read"]
+
+      - username: "admin_user"
+        password: "securepass3"
+        database: "postgres"
+        roles: ["read", "write", "admin"]
 
