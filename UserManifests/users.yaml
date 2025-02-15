@@ -13,7 +13,7 @@ data:
 
       - username: "analytics_user"
         password: "securepass2"
-        database: "analytics"
+        database: "postgres"
         roles: ["read"]
 
       - username: "admin_user"
