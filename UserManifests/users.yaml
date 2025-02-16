@@ -9,3 +9,4 @@ data:
       - username: "test_user"
         password: "securepass1"
         roles: ["read"]
+        database: "postgres"
