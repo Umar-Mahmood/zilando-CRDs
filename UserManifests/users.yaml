@@ -6,13 +6,3 @@ metadata:
 data:
   users.yaml: |
     users:
-      - username: "app_user"
-        password: "securepass1"
-        database: "postgres"
-        roles: ["read", "standby"]
-
-      - username: "admin_user"
-        password: "securepass3"
-        database: "postgres"
-        roles: ["read", "admin"]
-
