@@ -6,7 +6,7 @@ metadata:
 data:
   users.yaml: |
     users:
-      - username: app_user_2
+      - username: "app_user_1"
         password: "securepass1"
-        database: "postgres"
         roles: ["read"]
+        database: "postgres"
