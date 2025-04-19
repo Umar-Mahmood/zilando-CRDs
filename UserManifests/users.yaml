@@ -1,16 +1,7 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: postgres-users-config
-  namespace: postgres
-data:
-  users.yaml: |
-    users:
-      - username: "test_user_2"
-        password: "securepass1"
-        roles: ["viewer"]
-        database: "postgres"
-      - username: "test_user_3"
-        password: "securepass2"
-        roles: ["read", "write", "super"]
-        database: "postgres"
+timestamp: '2025-04-19T21:49:39.722911'
+users:
+- database: postgres
+  password: pass123
+  roles:
+  - read
+  username: user_0
