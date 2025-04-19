@@ -8,5 +8,9 @@ data:
     users:
       - username: "test_user_2"
         password: "securepass1"
-        roles: ["read"]
+        roles: ["viewer"]
+        database: "postgres"
+      - username: "test_user_3"
+        password: "securepass2"
+        roles: ["read", "write", "super"]
         database: "postgres"
