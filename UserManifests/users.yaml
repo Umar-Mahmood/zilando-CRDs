@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-users-config
-  namespace: argocd-zilando
+  namespace: postgres
 data:
   users.yaml: |
     users:
