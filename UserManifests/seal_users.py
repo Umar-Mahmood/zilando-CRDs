@@ -13,8 +13,10 @@ OUTPUT_SEALED = "sealed-users.yaml"
 
 def load_users():
     with open(EDIT_FILE, "r") as f:
-        parsed = yaml.safe_load(f)
-    return parsed["users"]
+        outer_yaml = yaml.safe_load(f)
+    users_yaml_str = outer_yaml["data"]["users.yaml"]
+    parsed_users = yaml.safe_load(users_yaml_str.strip())
+    return parsed_users["users"]
 
 def make_secret_yaml(user):
     encoded_pw = base64.b64encode(user["password"].encode()).decode()
