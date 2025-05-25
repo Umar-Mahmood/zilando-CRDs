@@ -89,6 +89,7 @@ def sync_users():
                 # Handle deletions
                 for username in last_seen_users:
                     if username not in desired_users and username in current_users:
+                        print(f"🗑️ Deleting user: {username}")
                         try:
                             drop_user(cur, username)
                             log(f"🗑️ Deleted user: {username}")
