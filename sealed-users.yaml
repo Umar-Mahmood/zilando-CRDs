@@ -1,0 +1,31 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: user-app-user-1-secret
+  namespace: postgres
+spec:
+  encryptedData:
+    password: AgBthtgQ9yZw4VO6BJqTax6jfEvCHD9+5VWg2qQ++NzehmLBmz9Q9oqKyWjKNPGke2YmMFR0r8bdyowWoK3KTnOQ/fAi40Hx5jV8JKJjPXMlsn/edc9fFo8/O+Mhcd64sgtfJzhMRD9IdR3v9EAkHIyDIuaAQi5GSIdWC9Z7/AkzjCuwyQuMSO4bVepgIodHfupHW5G69HyXTdC/HRLuIEXw7gDGFOzHyZ5ZpFlKfpu4w2SwUDX/JDYzESrDuHPYD/Pq+pZT3zTRir3hEtR7GGQKGTlkwIlmYyuYoDIhUrwwobZ5PE/UDaaBc79gdD0b7nOimx4brXW5MuQPbwIFfgy3FWXeZNvf9iZiZKpBLWNBTfOvFRluX0dsD0wDE7o3BkTjq0azaQCAw6CdpYIInBhlUmH9P28sZYS0MGtAl+P4rUwYVH4Ti+bjWBWsmZyKVMCT8SlW+PSPaayoLcU5vlswdrlsaeqIgo8dQiwjKnH4G+cpxVY6HLP1vfS7fiFUGXaRyOX/wB7skEi4ptWMXdgclBay+7/YCpcKCtbgb2teCHqqjykTe3SbK7S8H1LqEKSnp1QimlqUpaQANNdnyvkp+BUHVH8uM0vjWKeyWViYtZqCfusseVEBjHWR1ZJIp41P0b7fWAru+kI1atjCOJb/HPHKnHBEiN9+x2YdYJWxXWczwqiGztw+/w4YhlT90RuOur3otmorupGwXw==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: user-app-user-1-secret
+      namespace: postgres
+    type: Opaque
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: user-admin-user-secret
+  namespace: postgres
+spec:
+  encryptedData:
+    password: AgAqQmgKxhP2iPSeBxrbB4xNDyV06h1jWv8gvdMAmMewbj3yvkSVEurKzFYLz+E0hHfpY6aaxeeLsouFDgMy6bbRPpTSZzA3HZ9BSgYZmuRHZSbMrwNdnC5ZlLMHVojYFqvzdWVETxhqiK53WKvmB+kQLcZY8iXzYanoaYg6Rllj5wLL++xfBrHPL2ZsPUEHIkDYjhZWuzAVBaBrliLgmnHC5KE4Nqp/Ym4yvO8ZEecUzSsGlmqaFyqe8zi9XLrdUgKiZoNjAC5usR4N1C4Zfv0+iKNQlYl6LVRZhK/3lx8ta9Ia6Sgh4KpYMleiGIOrhKPyxtKUGseCWpPGUSoNAIxfReiwwwj7iNmZiDL+0DpS1AGKJzm9vaGfzTMEMBq5c/5Jo8IVg7+eqVqXMy1zrkeTRt6rCvafSjeLp2Zae4nsYnZ/YeC4nW1Vis5RrBHvDf6Iq4GgExfdFEddsI0v9KPbG39o9Ig7WZw5UASvPvLsCrO46NEO7d/Pc7tKkdZD2HK6waI5wGLoD0Om/2ZqroxqoVevsEVJ+mA8D1qDni3VJrgNvD64Zux2Uh92d0rHkTVcAZfhEh3g3Ej/dNapR7UM+d68zIq47q+LCIqNH2cmrJtPIadDy+z+u3m0wDQiTV8GriIEvMA8rRcusfUgA58dStqQvWY1RItfj9IY34VrDi9+hf0j2wwXbKg80tFh9iEpFSbg5cLuI8EQ0A==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: user-admin-user-secret
+      namespace: postgres
+    type: Opaque

@@ -3,10 +3,20 @@ import time
 import yaml
 import psycopg2
 from kubernetes import client, config
+from datetime import datetime
 
 # Load Kubernetes config
 config.load_incluster_config()
 v1 = client.CoreV1Api()
+
+import base64
+
+def get_user_password(username):
+    # Sanitize name (replace _ with - to match secret names)
+    secret_name = f"user-{username.replace('_', '-')}-secret"
+    secret = v1.read_namespaced_secret(secret_name, NAMESPACE)
+    encoded_pw = secret.data["password"]
+    return base64.b64decode(encoded_pw).decode()
 
 NAMESPACE = "postgres"
 CONFIGMAP_NAME = "postgres-users-config"
@@ -18,6 +28,9 @@ DB_USER = os.getenv("DB_USER", "postgres")
 DB_PASS = os.getenv("DB_PASS", "postgres")
 
 last_seen_users = {}
+
+def log(msg):
+    print(f"[{datetime.now().isoformat()}] {msg}", flush=True)
 
 def connect_db():
     return psycopg2.connect(
@@ -40,7 +53,7 @@ def fetch_existing_users(cursor):
 
 def create_user(cursor, user):
     username = user["username"]
-    password = user["password"]
+    password = get_user_password(user["username"])
     roles = user.get("roles", [])
     database = user["database"]
 
@@ -73,30 +86,30 @@ def sync_users():
                 for username in last_seen_users:
                     if username not in desired_users and username in current_users:
                         drop_user(cur, username)
-                        print(f"🗑️ Deleted user: {username}", flush=True)
+                        log(f"🗑️ Deleted user: {username}")
 
                 # Handle additions and updates
                 for username, user in desired_users.items():
                     if username not in current_users:
                         create_user(cur, user)
-                        print(f"✅ Created user: {username}", flush=True)
+                        log(f"✅ Created user: {username}")
                     else:
                         prev = last_seen_users.get(username, {})
                         if prev.get("roles") != user.get("roles"):
                             update_roles(cur, username, prev.get("roles", []), user.get("roles", []))
-                            print(f"🔄 Updated roles for: {username}", flush=True)
+                            log(f"🔄 Updated roles for: {username}")
 
             conn.commit()
 
         last_seen_users = desired_users
-        print("🟢 Sync complete.", flush=True)
+        log("� Sync complete.")
 
     except Exception as e:
-        print(f"❌ Sync error: {e}", flush=True)
+        log(f"❌ Sync error: {e}")
 
 if __name__ == "__main__":
-    print("🟢 Controller started...", flush=True)
+    log(f"🟢 Controller started...")
     while True:
-        print("🔁 Syncing users...", flush=True)
+        log("🔁 Syncing users...")
         sync_users()
         time.sleep(30)
