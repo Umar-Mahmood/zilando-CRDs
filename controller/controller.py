@@ -71,6 +71,10 @@ def update_roles(cursor, username, old_roles, new_roles):
         cursor.execute(f"GRANT {role} TO {username};")
 
 def drop_user(cursor, username):
+    cursor.execute(f"REVOKE ALL PRIVILEGES ON DATABASE {DB_NAME} FROM {username};")
+    cursor.execute(f"REASSIGN OWNED BY {username} TO {DB_USER};")
+    cursor.execute(f"DROP OWNED BY {username};")
+    cursor.execute(f"DROP USER IF EXISTS {username};")
     cursor.execute(f"DROP USER IF EXISTS {username};")
 
 def sync_users():
@@ -85,8 +89,11 @@ def sync_users():
                 # Handle deletions
                 for username in last_seen_users:
                     if username not in desired_users and username in current_users:
-                        drop_user(cur, username)
-                        log(f"🗑️ Deleted user: {username}")
+                        try:
+                            drop_user(cur, username)
+                            log(f"🗑️ Deleted user: {username}")
+                        except Exception as e:
+                            log(f"❌ Error deleting user {username}: {e}")
 
                 # Handle additions and updates
                 for username, user in desired_users.items():
