@@ -3,18 +3,18 @@ import subprocess
 import tempfile
 import os
 import base64
+from datetime import datetime
 
-CONFIGMAP_FILE = "users.yaml"  # ← your actual file
+EDIT_FILE = "edit-users.yaml"
+OUTPUT_CONFIGMAP = "users.yaml"
 CERT_FILE = "pub-cert.pem"
 NAMESPACE = "postgres"
-OUTPUT_FILE = "sealed-users.yaml"
+OUTPUT_SEALED = "sealed-users.yaml"
 
-def extract_users(configmap_path):
-    with open(configmap_path, "r") as f:
-        outer_yaml = yaml.safe_load(f)
-    users_yaml_str = outer_yaml["data"]["users.yaml"]
-    parsed_users = yaml.safe_load(users_yaml_str)
-    return parsed_users["users"]
+def load_users():
+    with open(EDIT_FILE, "r") as f:
+        parsed = yaml.safe_load(f)
+    return parsed["users"]
 
 def make_secret_yaml(user):
     encoded_pw = base64.b64encode(user["password"].encode()).decode()
@@ -54,13 +54,39 @@ def seal(secret_yaml):
     return yaml.safe_load(result.stdout.decode())
 
 def main():
-    users = extract_users(CONFIGMAP_FILE)
+    users = load_users()
     sealed_secrets = [seal(make_secret_yaml(user)) for user in users]
 
-    with open(OUTPUT_FILE, "w") as f:
+    # Write sealed secrets
+    with open(OUTPUT_SEALED, "w") as f:
         yaml.dump_all(sealed_secrets, f)
+    print(f"✅ Sealed secrets written to: {OUTPUT_SEALED}")
 
-    print(f"✅ Sealed secrets written to: {OUTPUT_FILE}")
+    # Create cleaned configmap
+    cleaned_users = []
+    for user in users:
+        cleaned = {k: v for k, v in user.items() if k != "password"}
+        cleaned_users.append(cleaned)
+
+    users_configmap = {
+        "apiVersion": "v1",
+        "kind": "ConfigMap",
+        "metadata": {
+            "name": "postgres-users-config",
+            "namespace": NAMESPACE
+        },
+        "data": {
+            "users.yaml": yaml.dump({
+                "timestamp": datetime.utcnow().isoformat(),
+                "users": cleaned_users
+            })
+        }
+    }
+
+    with open(OUTPUT_CONFIGMAP, "w") as f:
+        yaml.dump(users_configmap, f)
+
+    print(f"🧹 Passwords removed from output: {OUTPUT_CONFIGMAP}")
 
 if __name__ == "__main__":
     main()
