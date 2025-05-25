@@ -5,7 +5,7 @@ data:
     \  password: pass1\n  roles:\n  - read\n  username: user_1\n- database: postgres\n\
     \  password: pass2\n  roles:\n  - read\n  username: user_2\n- database: postgres\n\
     \  password: pass3\n  roles:\n  - read\n  username: user_3\n- database: postgres\n\
-    \  password: pass3\n  roles:\n  - read\n  username: user_13\n- database: postgres\n\
+    \  password: pass3\n  roles:\n  - read\n  username: user_14\n- database: postgres\n\
     \  password: pass4\n  roles:\n  - read\n  username: user_4\n"
 kind: ConfigMap
 metadata:
